@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Avatar
+from .models import Avatar, UserEdit
 
 class MyUserCreationForm(UserCreationForm):
 
@@ -28,6 +28,17 @@ class UserEditForm(forms.Form):
 
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
+        help_texts = {k: '' for k in fields}
+        
+class UserEdit2(forms.Form):
+    
+    phone = forms.IntegerField(label='Phone Number')
+    location = forms.CharField(label='Location')
+    
+    class Meta:
+
+        model = UserEdit
+        fields = ['phone', 'location']
         help_texts = {k: '' for k in fields}
         
         

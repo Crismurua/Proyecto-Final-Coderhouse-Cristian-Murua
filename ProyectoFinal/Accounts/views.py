@@ -4,9 +4,9 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
-from .forms import MyUserCreationForm, UserEditForm, AvatarForm
+from .forms import MyUserCreationForm, UserEditForm, AvatarForm, UserEdit2
 
 # Create your views here.
 def login_request(request):
@@ -57,26 +57,43 @@ def user_edit(request):
 
     if request.method == 'POST':
         form = UserEditForm(request.POST)
-
-        if form.is_valid():
+        form2 = UserEdit2(request.POST)
+        form2.instance.user = form
+        if form.is_valid() and form2.is_valid():
             info = form.cleaned_data
-
+            info2 = form2.cleaned_data
+            
+            
             user.username = info['username']
             user.email = info['email']
             user.first_name = info['first_name']
             user.last_name = info['last_name']
+            
+            user.phone = info2['phone']
+            user.location = info2['location']
+            
+            group = Group.objects.get(name='user-edit')
+            user.groups.add(group)
 
             user.save()
+            
 
             return redirect('/')
     
     else:
-        form = UserEditForm(initial={'username': user.username,
+        form = UserEditForm(initial={
+                                    'username': user.username,
                                     'email': user.email,
                                     'last_name': user.last_name,
-                                    'first_name': user.first_name})
+                                    'first_name': user.first_name,
+                                    })
+        
+        form2 = UserEdit2(initial={
+                                    'phone': user.phone,
+                                    'location': user.location,
+                                    })
 
-    return render(request, 'Project/user-edit.html', {'form': form})
+    return render(request, 'Project/user-edit.html', {'form': form, 'form2': form2})
 
 
 @login_required
@@ -92,4 +109,4 @@ def upload_avatar(request):
             return redirect('/')
 
     else:
-        return render(request, 'Project/user-edit.html', {'avatar_form': avatar_form})
+        return render(request, 'Project/avatar-edit.html', {'avatar_form': avatar_form})

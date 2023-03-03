@@ -1,0 +1,38 @@
+{% extends 'Project/main.html' %}
+
+{% block title %}
+Signup
+{% endblock %}
+
+{% block header %}
+Sign in
+{% endblock %}
+
+{% block content %}
+<section class="mt-5 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                {% if message %}
+                <p style="color: red;">{{ message }}</p>
+                {% endif %}
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-outline-dark" type="submit">Sign In</button>
+                </form>
+                
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="">Don't have an account?</p>
+                <a class="btn btn-outline-dark mb-2" href="{% url 'signup' %}">Sign up</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

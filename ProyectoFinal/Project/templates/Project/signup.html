@@ -4,8 +4,16 @@
 Signup
 {% endblock %}
 
+{% block header %}
+Sign Up
+{% endblock %}
+
+{% block subheader %}
+Create your account to find your dream product or to sell someone else one
+{% endblock %}
+
 {% block content %}
-<section class="mt-5">
+<section class="mt-2 text-center">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -14,10 +22,12 @@ Signup
                 <p style="color: red;">{{ message }}</p>
                 {% endif %}
 
-                <form  action="" method="POST">
+                <form action="" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <button class="btn btn-outline-dark" type="submit">Sign Up</button>
+                    <table class="d-flex justify-content-center">
+                    {{ form.as_table }}
+                    </table>
+                    <button class="btn btn-outline-dark m-2" type="submit">Sign Up</button>
                 </form>
                 
             </div>

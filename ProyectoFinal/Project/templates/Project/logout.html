@@ -1,0 +1,26 @@
+{% extends 'Project/main.html' %}
+
+{% block title %}
+Logout
+{% endblock %}
+
+{% block header %}
+Logout
+{% endblock %}
+
+{% block content %}
+<section class="mt-5 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <h1>See you later...</h1>
+
+                <a class="btn btn-outline-dark mb-2" href="{% url 'home' %}">Home</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
