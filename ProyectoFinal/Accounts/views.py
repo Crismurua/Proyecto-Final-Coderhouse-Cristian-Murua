@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 
-from .forms import MyUserCreationForm, UserEditForm, AvatarForm, UserEdit2
+from .forms import MyUserCreationForm, UserEditForm, AvatarForm, UserExtraCreate
 
 # Create your views here.
 def login_request(request):
@@ -39,16 +39,22 @@ def login_request(request):
 def signup(request):
     
     if request.method == 'POST':
-        form = MyUserCreationForm(request.POST)
+        form = MyUserCreationForm(request.POST, request.FILES)
+        form2 = UserExtraCreate(request.POST, request.FILES)
 
-        if form.is_valid():
-            user = form.cleaned_data['username']
-            context = {'menssage': 'User successfully created!'}
-            return render(request, 'Project/home.html', context)
+        if form.is_valid() and form2.is_valid():
+            user = form.save()
+            form2.instance.user = user
+            form2.save()
+            group = Group.objects.get(name='useredit')
+            user.groups.add(group)
+            
+            return redirect('Project/home.html')
     else:      
         form = MyUserCreationForm()
-        context = {'form': form}
-        return render(request, 'Project/signup.html', context)
+        form2 = UserExtraCreate()
+    context = {'form': form, 'form2': form2}
+    return render(request, 'Project/signup.html', context)
     
     
 @login_required
@@ -57,23 +63,17 @@ def user_edit(request):
 
     if request.method == 'POST':
         form = UserEditForm(request.POST)
-        form2 = UserEdit2(request.POST)
-        form2.instance.user = form
-        if form.is_valid() and form2.is_valid():
-            info = form.cleaned_data
-            info2 = form2.cleaned_data
-            
+        
+        if form.is_valid():
+            info = form.cleaned_data            
             
             user.username = info['username']
             user.email = info['email']
             user.first_name = info['first_name']
             user.last_name = info['last_name']
             
-            user.phone = info2['phone']
-            user.location = info2['location']
-            
-            group = Group.objects.get(name='user-edit')
-            user.groups.add(group)
+            user.phone = info['phone']
+            user.location = info['location']
 
             user.save()
             
@@ -86,14 +86,11 @@ def user_edit(request):
                                     'email': user.email,
                                     'last_name': user.last_name,
                                     'first_name': user.first_name,
-                                    })
-        
-        form2 = UserEdit2(initial={
-                                    'phone': user.phone,
-                                    'location': user.location,
+                                    #'phone': user.phone,
+                                    #'location': user.location,
                                     })
 
-    return render(request, 'Project/user-edit.html', {'form': form, 'form2': form2})
+    return render(request, 'Project/user-edit.html', {'form': form})
 
 
 @login_required

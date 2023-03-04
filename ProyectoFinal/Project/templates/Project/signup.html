@@ -26,6 +26,7 @@ Create your account to find your dream product or to sell someone else one
                     {% csrf_token %}
                     <table class="d-flex justify-content-center">
                     {{ form.as_table }}
+                    {{ form2.as_table }}
                     </table>
                     <button class="btn btn-outline-dark m-2" type="submit">Sign Up</button>
                 </form>
