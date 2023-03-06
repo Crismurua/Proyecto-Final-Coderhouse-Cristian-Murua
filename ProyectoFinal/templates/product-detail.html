@@ -1,4 +1,4 @@
-{% extends 'Project/main.html' %}
+{% extends 'main.html' %}
 
 {% block title %}
 Details
@@ -19,6 +19,7 @@ See the complete info about the product
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="{{ product.name }}" /></div>
             <div class="col-md-6">
                 <div class="small mb-1">Seller: {{ product.user.username }}</div>
+                <div class="small mb-1">ID: {{ product.id }}</div>
                 <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
                 <div class="fs-1 mb-5">
                     <strong><span style="color: green;">$ {{ product.price }}</span></strong>
@@ -33,6 +34,7 @@ See the complete info about the product
                     <div class="small m-2">Not Available</div>
                     {% endif %}
                 </div>
+                <p class="card-text"><small class="text-muted"> {{product.date}} </small></p>
             </div>
         </div>
         
@@ -42,7 +44,7 @@ See the complete info about the product
 <!-- Comments -->
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
+        <!-- <div class="row gx-4 gx-lg-5 align-items-center">
            {% if product.comment_set.all %}
             {% for comment in product.comment_set.all %}
             <div class="media mb-2">
@@ -61,14 +63,62 @@ See the complete info about the product
 
             {% endfor %}
            {% endif %} 
+        </div> -->
+    
+        
+        <hr class="mt-2"/>
+        
+        <div class="mb-1 row comment-div border-0">
+            {% for comment in product.get_comments %}
+            <div id="{{ comment.id }}"class='d-flex justify-content-around col-6 p-0'>
+            <p class="mb-0">
+                <strong>{{ comment.user.username }}</strong> {{ comment.comment }}
+            </p>
+                <a
+                type="button"
+                data-comment="{{comment.id}}"
+                class="fs-5 text-reset like-button"
+                >
+                {% if user in comment.likes.all %}
+                <i class="bi-heart text-danger"></i>
+                {% else%}
+                <i class="bi-heart"></i>
+                {% endif %}
+            </a>
+            <p class="fw-bold fs-5 px-1">{{comment.likes.all | length}}</p>
+            <p class="fw-bold fs-5 col-md-auto">Likes</p>
+            </div>
+            {% endfor %}
         </div>
-        <a href="{% url 'new-comment' %}">
-            <button class="btn btn-outline-dark flex-shrink-0 m-3" type="">
-                <i class="bi-chat-left-dots-fill me-1"></i>
-                Comment
-            </button>
-        </a>
     </div>
+    
+        <hr clas='border-0'/>
+        <form class="row" id="comment_form">
+            <div class="d-flex justify-content-center">
+                <img
+                src="{{user.image.url}}"
+                class="mx-2 rounded-circle"
+                height="20"
+                width="20"
+                alt=""
+                loading="lazy"
+                />
+                <input
+                id="comment{{product.id}}"
+                class="form-control  my-auto mx-2"
+                placeholder="Comment..."
+                />
+                <div>
+                    <button
+                    class="btn btn-outline-dark m-2 comment-button"
+                    data-post="{{product.id}}"
+                    type="submit"
+                    >
+                    Publish
+                    </button>
+                </div>
+            </div>
+        </form>
 </section>
 
 

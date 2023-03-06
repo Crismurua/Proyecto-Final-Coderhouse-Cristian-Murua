@@ -23,17 +23,16 @@ def login_request(request):
 
             if user is not None:
                 login(request, user)
-                context = {'message': f'Welcome {user}'}
-                return render(request, 'Project/home.html', context)
+                return redirect('project:home')
             else:
                 context = {'message': f'User not found!', 'form': form}
-                return render(request, 'Project/login.html', context)
+                return render(request, 'login.html', context)
         else:
             context = {'message': f'Incorrect data!', 'form': form}
-            return render(request, 'Project/login.html', context)
+            return render(request, 'login.html', context)
     
     context = {'form': form}
-    return render(request, 'Project/login.html', context)
+    return render(request, 'login.html', context)
 
 
 def signup(request):
@@ -49,12 +48,12 @@ def signup(request):
             group = Group.objects.get(name='useredit')
             user.groups.add(group)
             
-            return redirect('Project/home.html')
+            return redirect('project:home')
     else:      
         form = MyUserCreationForm()
         form2 = UserExtraCreate()
     context = {'form': form, 'form2': form2}
-    return render(request, 'Project/signup.html', context)
+    return render(request, 'signup.html', context)
     
     
 @login_required
@@ -75,7 +74,7 @@ def user_edit(request):
             user.save()
             
 
-            return redirect('/')
+            return redirect('project:home')
     
     else:
         form = UserEditForm(initial={
@@ -85,7 +84,7 @@ def user_edit(request):
                                     'first_name': user.first_name,
                                     })
 
-    return render(request, 'Project/user-edit.html', {'form': form})
+    return render(request, 'user-edit.html', {'form': form})
 
 @login_required
 def user_extra(request):
@@ -99,7 +98,7 @@ def user_extra(request):
             form.save()
             
 
-            return redirect('/')
+            return redirect('project:home')
     
     else:
         form = UserEditExtraForm(initial={
@@ -107,7 +106,7 @@ def user_extra(request):
                                     'location': user.location,
                                     })
 
-    return render(request, 'Project/user-extra.html', {'form': form})
+    return render(request, 'user-extra.html', {'form': form})
 
 
 @login_required
@@ -120,7 +119,7 @@ def upload_avatar(request):
         if avatar_form.is_valid():
             avatar_form.save()
 
-            return redirect('/')
+            return redirect('project:home')
 
     else:
-        return render(request, 'Project/avatar-edit.html', {'avatar_form': avatar_form})
+        return render(request, 'avatar-edit.html', {'avatar_form': avatar_form})

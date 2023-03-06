@@ -1,4 +1,4 @@
-{% extends 'Project/main.html' %}
+{% extends 'main.html' %}
 
 {% block title %}
 Profile
@@ -11,7 +11,7 @@ Welcome {{ user }}!
 {% endblock %}
 
 {% block subheader %}
-Edit extra fields
+Edit your profile
 {% endblock %}
 
 {% block content %}
@@ -19,7 +19,7 @@ Edit extra fields
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <a href="{% url 'avatar-edit' %}"><img src="{{ user.avatar.image.url }}" class="rounded-circle" height="200px" width="200px" alt=""></a>
+                <a href="{% url 'accounts:avatar-edit' %}"><img src="{{ user.avatar.image.url }}" class="rounded-circle" height="200px" width="200px" alt=""></a>
                 
                 <form class="m-4" action="" method="POST">
                     {% csrf_token %}
@@ -29,6 +29,7 @@ Edit extra fields
                     <input class="btn btn-outline-dark m-2" type="submit" value="Confirm">
                 </form>
 
+                <a href="{% url 'accounts:user-extra' %}"><button class="btn btn-outline-dark m-2">Extra Fields</button></a>
             </div>
         </div>
     </div>

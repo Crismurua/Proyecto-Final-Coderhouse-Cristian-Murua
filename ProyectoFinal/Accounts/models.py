@@ -16,7 +16,7 @@ class UserExtra(models.Model):
 class Avatar(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='avatar', null=True, blank=True, default='blank.png')
+    image = models.ImageField(upload_to='avatar', null=True, blank=True, default='avatar/blank.png')
 
     def __str__(self):
         return self.user.username

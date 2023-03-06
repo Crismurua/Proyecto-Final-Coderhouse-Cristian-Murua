@@ -1,26 +1,23 @@
-{% extends 'Project/main.html' %}
+{% extends 'main.html' %}
 
 {% block title %}
-My Products
+Home
 {% endblock %}
 
 {% block header %}
-My Products
+Welcome to the Coderhouse's Marketplace
 {% endblock %}
 
 {% block subheader %}
-See your published products and edit them
+Take a look to the products and get the perfect one for you
 {% endblock %}
 
 {% block content %}
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <a href="{% url 'new-product' %}"><button class="btn btn-outline-dark m-2">+ New</button></a>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-
-            {% if user.product_set.all %}
-            {% for product in user.product_set.all %}
+            {% for product in object_list %}
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
@@ -36,12 +33,11 @@ See your published products and edit them
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'detail' product.id %}">More</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'project:detail' product.id %}">More</a></div>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            {% endif %}
             
         </div>
     </div>

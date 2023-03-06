@@ -7,10 +7,5 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = "__all__"
         exclude = ['date', 'user']
-        
-class CommentForm(forms.ModelForm):
-    
-    class Meta:
-        model = Comment
-        fields = ['comment']
+
     

@@ -1,21 +1,25 @@
-{% extends 'Project/main.html' %}
+{% extends 'main.html' %}
 
 {% block title %}
-New Product
+Profile
 {% endblock %}
 
 {% block header %}
 
-Publish your products
+Welcome {{ user }}!
 
 {% endblock %}
 
+{% block subheader %}
+Edit extra fields
+{% endblock %}
 
 {% block content %}
 <section class="mt-2 text-center">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <a href="{% url 'accountsavatar-edit' %}"><img src="{{ user.avatar.image.url }}" class="rounded-circle" height="200px" width="200px" alt=""></a>
                 
                 <form class="m-4" action="" method="POST">
                     {% csrf_token %}
@@ -24,6 +28,7 @@ Publish your products
                     </table>
                     <input class="btn btn-outline-dark m-2" type="submit" value="Confirm">
                 </form>
+
             </div>
         </div>
     </div>
