@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Avatar, UserEdit
+from .models import Avatar, UserExtra
 
 class MyUserCreationForm(UserCreationForm):
 
@@ -23,7 +23,7 @@ class UserExtraCreate(forms.ModelForm):
     
     class Meta:
 
-        model = UserEdit
+        model = UserExtra
         fields = ['phone', 'location']
         help_texts = {k: '' for k in fields}
             
@@ -34,15 +34,25 @@ class UserEditForm(forms.Form):
     email = forms.EmailField(label='Email')
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
-    phone = forms.IntegerField(label='Phone Number')
-    location = forms.CharField(label='Location')
+
 
     class Meta:
 
-        model = UserEdit
+        model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'location']
         help_texts = {k: '' for k in fields}
-        
+
+class UserEditExtraForm(forms.ModelForm):
+    
+    phone = forms.IntegerField(label='Phone Number')
+    location = forms.CharField(label='Location')
+    
+    class Meta:
+
+        model = UserExtra
+        fields = ['phone', 'location']
+        help_texts = {k: '' for k in fields}
+            
         
 class AvatarForm(forms.ModelForm):
 

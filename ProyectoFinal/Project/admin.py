@@ -6,3 +6,4 @@ from Accounts.models import *
 admin.site.register(Product)
 admin.site.register(Comment)
 admin.site.register(Avatar)
+admin.site.register(UserExtra)

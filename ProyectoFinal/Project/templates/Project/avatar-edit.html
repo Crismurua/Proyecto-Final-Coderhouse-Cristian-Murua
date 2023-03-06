@@ -19,7 +19,7 @@ Edit your Avatar
     <div class="container">
         <div class="column">
             <div class="col-lg-12">
-                <a href="{% url 'avatar-edit' %}"><img src="{{ user.avatar.image.url }}" class="rounded-circle mt-1" height="200px" width="200px" alt=""></a>
+                <a href="{% url 'avatar-edit' %}"><img src="{{ user.avatar.image.url }}" class="rounded-circle mt-1" height="200px" width="200px" alt="{{ user.username }}"></a>
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ avatar_form.as_p }}

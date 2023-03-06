@@ -1,13 +1,16 @@
 from django import forms
+from .models import Product, Comment
 
-class ProductForm(forms.Form):
-    name = forms.CharField()
-    image = forms.ImageField()
-    description = forms.CharField(label='Description', widget=forms.TextInput)
-    price = forms.FloatField()
-    location = forms.CharField()
-    available = forms.BooleanField()
+class ProductForm(forms.ModelForm):
     
-class CommentForm(forms.Form):
-    comment = forms.CharField(label='Comment', widget=forms.TextInput)
+    class Meta:
+        model = Product
+        fields = "__all__"
+        exclude = ['date', 'user']
+        
+class CommentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Comment
+        fields = ['comment']
     

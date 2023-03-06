@@ -1,0 +1,75 @@
+{% extends 'Project/main.html' %}
+
+{% block title %}
+Details
+{% endblock %}
+
+{% block header %}
+Product Detail
+{% endblock %}
+
+{% block subheader %}
+See the complete info about the product
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="{{ product.name }}" /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">Seller: {{ product.user.username }}</div>
+                <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
+                <div class="fs-1 mb-5">
+                    <strong><span style="color: green;">$ {{ product.price }}</span></strong>
+                    
+                </div>
+                <p class="lead">{{ product.description }}</p>
+                <div class="d-flex">
+                    <div class="small m-2">{{ product.location }}</div>
+                    {% if product.available == True %}
+                    <div class="small m-2">Available</div>
+                    {% else %}
+                    <div class="small m-2">Not Available</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- Comments -->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+           {% if product.comment_set.all %}
+            {% for comment in product.comment_set.all %}
+            <div class="media mb-2">
+
+                {% if comment.user.avatar %}
+                    <img class="d-flex mr-2 rounded-circle" width="50px" height="50px" src="{{ comment.user.image.url }}" alt="{{ user.username }}">
+                {% else %}
+                    <img class="d-flex mr-2 rounded-circle" src="avatars/blank.png" alt="">
+                {% endif %}
+    
+                <div class="media-body">
+                    <h5 class="mt-0">{{comment.user.username}}</h5>
+                    {{comment.comment}}
+                </div>
+            </div>
+
+            {% endfor %}
+           {% endif %} 
+        </div>
+        <a href="{% url 'new-comment' %}">
+            <button class="btn btn-outline-dark flex-shrink-0 m-3" type="">
+                <i class="bi-chat-left-dots-fill me-1"></i>
+                Comment
+            </button>
+        </a>
+    </div>
+</section>
+
+
+{% endblock %}

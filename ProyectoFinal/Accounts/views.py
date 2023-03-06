@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 
-from .forms import MyUserCreationForm, UserEditForm, AvatarForm, UserExtraCreate
+from .forms import MyUserCreationForm, UserEditForm, AvatarForm, UserExtraCreate, UserEditExtraForm
 
 # Create your views here.
 def login_request(request):
@@ -71,9 +71,6 @@ def user_edit(request):
             user.email = info['email']
             user.first_name = info['first_name']
             user.last_name = info['last_name']
-            
-            user.phone = info['phone']
-            user.location = info['location']
 
             user.save()
             
@@ -86,11 +83,31 @@ def user_edit(request):
                                     'email': user.email,
                                     'last_name': user.last_name,
                                     'first_name': user.first_name,
-                                    #'phone': user.phone,
-                                    #'location': user.location,
                                     })
 
     return render(request, 'Project/user-edit.html', {'form': form})
+
+@login_required
+def user_extra(request):
+    user = request.user.userextra
+    form = UserEditExtraForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserEditExtraForm(request.POST, instance=user)
+        
+        if form.is_valid():
+            form.save()
+            
+
+            return redirect('/')
+    
+    else:
+        form = UserEditExtraForm(initial={
+                                    'phone': user.phone,
+                                    'location': user.location,
+                                    })
+
+    return render(request, 'Project/user-extra.html', {'form': form})
 
 
 @login_required

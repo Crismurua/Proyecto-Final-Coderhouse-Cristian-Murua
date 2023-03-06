@@ -19,7 +19,16 @@ def home(request):
 class ProductList(ListView):
     
     model = Product
+    template_name = 'Project/home.html'
+    
+class MyProductList(LoginRequiredMixin, ListView):
+    
+    model = User
     template_name = 'Project/product-list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.all()
     
 class ProductDetail(DetailView):
     
@@ -30,8 +39,13 @@ class NewProduct(LoginRequiredMixin, CreateView):
 
     model = Product
     template_name = 'Project/new-product.html'
-    success_url = reverse_lazy('home')
-    fields = ['name', 'image', 'description', 'price', 'location', 'available']
+    success_url = reverse_lazy('my-products')
+    form_class = ProductForm
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super(NewProduct, self).form_valid(form)
     
 class UpdateProduct(LoginRequiredMixin, UpdateView):
 
@@ -47,17 +61,29 @@ class DeleteProduct(LoginRequiredMixin, DeleteView):
     template_name = 'Project/delete-product.html'
     success_url = reverse_lazy('home')
     
-class CommentList(ListView):
+class CommentList(LoginRequiredMixin, ListView):
     
-    model = Comment
-    template_name = 'Project/comment-list.html'
+    model = Product
+    template_name = 'Project/product-detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.all()
+       
+        
     
 class NewComment(LoginRequiredMixin, CreateView):
 
     model = Comment
     template_name = 'Project/new-comment.html'
     success_url = reverse_lazy('home')
-    fields = ['comment']
+    form_class = CommentForm
+    
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.product = self.request.product
+        form.save()
+        return super(NewComment, self).form_valid(form)
     
 class DeleteComment(LoginRequiredMixin, DeleteView):
 
