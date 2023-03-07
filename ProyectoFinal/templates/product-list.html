@@ -36,13 +36,15 @@ See your published products and edit them
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'project:detail' product.id %}">More</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'project:detail' product.id %}">More</a>
+                        <a class="btn btn-outline-dark mt-auto" href="{% url 'project:update-product' product.id %}">Edit</a>
+                        <a class="btn btn-outline-dark mt-auto" href="{% url 'project:delete-product' product.id %}">Delete</a></div>
                     </div>
                 </div>
             </div>
             {% endfor %}
             {% endif %}
-            
+
         </div>
     </div>
 </section>

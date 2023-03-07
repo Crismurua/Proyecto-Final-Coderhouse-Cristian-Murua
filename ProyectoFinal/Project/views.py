@@ -16,6 +16,9 @@ from .forms import ProductForm
 def home(request):
     return render(request, 'home.html')
 
+def about(request):
+    return render(request, 'about.html')
+
 class ProductList(ListView):
     
     model = Product
@@ -39,7 +42,7 @@ class NewProduct(LoginRequiredMixin, CreateView):
 
     model = Product
     template_name = 'new-product.html'
-    success_url = reverse_lazy('my-products')
+    success_url = reverse_lazy('project:my-products')
     form_class = ProductForm
     
     def form_valid(self, form):
@@ -51,15 +54,15 @@ class UpdateProduct(LoginRequiredMixin, UpdateView):
 
     login_url = 'login/'
     model = Product
-    template_name = 'new-product.html'
-    success_url = reverse_lazy('home')
+    template_name = 'update-product.html'
+    success_url = reverse_lazy('project:my-products')
     fields = ['name', 'image', 'description', 'price', 'location', 'available']
     
 class DeleteProduct(LoginRequiredMixin, DeleteView):
 
     model = Product
     template_name = 'delete-product.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('project:my-products')
     
 # class CommentList(LoginRequiredMixin, ListView):
     
@@ -89,7 +92,7 @@ class DeleteComment(LoginRequiredMixin, DeleteView):
 
     model = Comment
     template_name = 'delete-comment.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('project:home')
     
 @login_required(login_url='login/')
 def like(request):

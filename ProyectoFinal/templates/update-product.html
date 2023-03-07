@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+
+{% block title %}
+My Products
+{% endblock %}
+
+{% block header %}
+
+Welcome {{ user }}!
+
+{% endblock %}
+
+{% block subheader %}
+Edit your product
+{% endblock %}
+
+{% block content %}
+<section class="mt-2 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <img src="{{ product.image.url }}" class="border-dark" height="200px" width="200px" alt="">
+                
+                <form class="m-4" action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="d-flex justify-content-center">
+                        {{ form.as_table }}
+                    </table>
+                    <input class="btn btn-outline-dark m-2" type="submit" value="Confirm">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
