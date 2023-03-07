@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+
+{% block title %}
+My Comments
+{% endblock %}
+
+{% block header %}
+My Comments
+{% endblock %}
+
+{% block subheader %}
+See your published comments and delete them if you want
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="mb-1 column comment-div border-0">
+
+            {% if user.comment_set.all %}
+            {% for comment in user.comment_set.all %}
+            <div id="{{ comment.id }}"class='d-flex justify-content-between col-5 p-0 m-1'>
+                <strong>{{ comment.product.name }} : </strong> {{ comment.comment }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

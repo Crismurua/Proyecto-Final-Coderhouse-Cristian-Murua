@@ -19,6 +19,9 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+def notfound(request):
+    return render(request, 'notfound.html')
+
 class ProductList(ListView):
     
     model = Product
@@ -64,35 +67,22 @@ class DeleteProduct(LoginRequiredMixin, DeleteView):
     template_name = 'delete-product.html'
     success_url = reverse_lazy('project:my-products')
     
-# class CommentList(LoginRequiredMixin, ListView):
-    
-#     model = Product
-#     template_name = 'Project/product-detail.html'
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['comments'] = Comment.objects.all()
+class CommentList(LoginRequiredMixin, ListView):
+  
+    model = Product
+    template_name = 'comment-list.html'
+  
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comments'] = Comment.objects.all()
        
         
-    
-# class NewComment(LoginRequiredMixin, CreateView):
-
-#     model = Comment
-#     template_name = 'Project/new-comment.html'
-#     success_url = reverse_lazy('home')
-#     form_class = CommentForm
-    
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         form.instance.product = self.request.product
-#         form.save()
-#         return super(NewComment, self).form_valid(form)
     
 class DeleteComment(LoginRequiredMixin, DeleteView):
 
     model = Comment
     template_name = 'delete-comment.html'
-    success_url = reverse_lazy('project:home')
+    success_url = reverse_lazy('project:comment-list')
     
 @login_required(login_url='login/')
 def like(request):
