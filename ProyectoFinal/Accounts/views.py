@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.views.generic.detail import DetailView
 
 from .forms import MyUserCreationForm, UserEditForm, AvatarForm, UserExtraCreate, UserEditExtraForm
 
@@ -40,19 +41,22 @@ def signup(request):
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST, request.FILES)
         form2 = UserExtraCreate(request.POST, request.FILES)
-
-        if form.is_valid() and form2.is_valid():
+        avatar_form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid() and form2.is_valid() and avatar_form.is_valid():
             user = form.save()
             form2.instance.user = user
+            avatar_form.instance.user = user
             form2.save()
-            group = Group.objects.get(name='useredit')
-            user.groups.add(group)
+            avatar_form.save()
+            # group = Group.objects.get(name='user-extra')
+            # user.groups.add(group)
             
-            return redirect('project:home')
+            return redirect('accounts:login')
     else:      
         form = MyUserCreationForm()
         form2 = UserExtraCreate()
-    context = {'form': form, 'form2': form2}
+        avatar_form = AvatarForm()
+    context = {'form': form, 'form2': form2, 'avatar_form': avatar_form}
     return render(request, 'signup.html', context)
     
     
@@ -123,3 +127,9 @@ def upload_avatar(request):
 
     else:
         return render(request, 'avatar-edit.html', {'avatar_form': avatar_form})
+
+
+class UserDetail(DetailView):
+    
+    model = User
+    template_name = 'user-detail.html'

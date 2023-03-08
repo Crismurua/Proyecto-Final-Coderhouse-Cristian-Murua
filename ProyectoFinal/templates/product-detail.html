@@ -18,7 +18,9 @@ See the complete info about the product
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image.url }}" alt="{{ product.name }}" /></div>
             <div class="col-md-6">
-                <div class="small mb-1">Seller: {{ product.user.username }}</div>
+                <div class="medium mb-2">Seller: {{ product.user.username }} 
+                    <a class="btn btn-outline-dark" href="{% url 'accounts:user-detail' product.user.id %}">+ Info</a>
+                </div>
                 <div class="small mb-1">ID: {{ product.id }}</div>
                 <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
                 <div class="fs-1 mb-5">
@@ -103,6 +105,7 @@ See the complete info about the product
         <hr clas='border-0'/>
         <form class="row" id="comment_form">
                 <div class="d-flex justify-content-center">
+                {% if user.avatar.image %}
                 <img
                 src="{{user.avatar.image.url}}"
                 class="mx-2 rounded-circle mt-2"
@@ -111,6 +114,16 @@ See the complete info about the product
                 alt=""
                 loading="lazy"
                 />
+                {% else %}
+                <img
+                src="../media/avatar/blank.png"
+                class="mx-2 rounded-circle mt-2"
+                height="40"
+                width="40"
+                alt=""
+                loading="lazy"
+                />
+                {% endif %}
                 <input
                 id="comment{{product.id}}"
                 class="form-control  my-auto mx-2"
