@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Project.urls', namespace='project')),
     path('', include('Accounts.urls', namespace='accounts')),
+    path('', include('Messages.urls', namespace='messages')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

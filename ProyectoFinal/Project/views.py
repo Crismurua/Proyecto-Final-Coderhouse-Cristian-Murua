@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -109,3 +109,15 @@ def comment(request):
     comment.save()
     response = JsonResponse({'comment' : comment_data})
     return response
+
+
+def search(request):
+    
+    if request.GET['name']:
+        searched_product = request.GET['name']
+        response = Product.objects.filter(name__icontains = searched_product)
+
+        return render(request, 'search.html', {'products': response, 'name': searched_product})
+
+    response = 'Could not find the product'
+    return HttpResponse(response)
