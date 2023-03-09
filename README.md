@@ -3,9 +3,9 @@
 Integrantes:<br>
   Cristian Murua<br>
 
-Descripcion del Proyecto:<br>
+<strong>Descripcion del Proyecto:</strong><br>
   Marketplace interactivo para usuarios registrados.<br>
-  Funcionalidades:<br>
+  <strong>Funcionalidades:</strong><br>
     -Visualizacion de productos publicados por los usuarios y busqueda mediante SearchBar<br>
     -Pagina de registro y login<br>
     -Visualizacion de productos propios<br>
@@ -17,15 +17,15 @@ Descripcion del Proyecto:<br>
     -Pagina About con info del desarrollador<br>
     -Pagina 404 Not Found demostrativa<br>
    <hr>
-  Arquitectura:<br>
+  <strong>Arquitectura:</strong><br>
     Proyecto base<br>
     App 'Project' de productos (CRUD completo), comentarios y likes (test unitarios incluidos)<br>
     App 'Accounts' de registro, login, logout y avatar de usuario<br>
     App 'Messages' de chat e inbox<br>
     (implementacion de ajax con logica JavaScript para comentarios, likes y chat)<br>
     <hr>
-  Rutas:<br>
-    Project rutas<br>
+  <strong>Rutas:</strong><br>
+    <strong>Project rutas</strong><br>
     Home -> 'http://127.0.0.1:8000/' (barra de busqueda de productos integrada)<br>
     About -> 'http://127.0.0.1:8000/about/'<br>
     NotFound -> 'http://127.0.0.1:8000/not-found/'<br>
@@ -39,7 +39,7 @@ Descripcion del Proyecto:<br>
     <br>
     <hr>
     <br>
-    Accounts rutas<br>
+  <strong>Accounts rutas</strong><br>
     Sigup -> 'http://127.0.0.1:8000/signup/'<br>
     Login -> 'http://127.0.0.1:8000/login/'<br>
     Logout -> 'http://127.0.0.1:8000/logout/'<br>
@@ -48,7 +48,7 @@ Descripcion del Proyecto:<br>
     Edicion de avatar de Usuario -> 'http://127.0.0.1:8000/avatar-edit/'<br>
     Detalle de Usuario (Vendedor) -> 'http://127.0.0.1:8000/user-detail/<id>/'<br>
     <hr>
-    Messages rutas<br>
+  <strong>Messages rutas</strong><br>
     Inbox -> 'http://127.0.0.1:8000/inbox/' (Logueo requerido)<br>
     Mensaje directo con usuario -> 'http://127.0.0.1:8000/dm/<nombre de usuario> (integrado en detalle de producto)<br>
     <hr>
@@ -56,7 +56,7 @@ Descripcion del Proyecto:<br>
       Proyecto/ProyectoFinal/Project/test.py<br>
       <hr>
       
-   Como correr el proyecto:<br>
+  <h3>Como correr el proyecto:</h3><br>
       -clonar repositorio en su ordenador<br>
       -desde una consola (ej. cmd, powershell o bash para windows) ubicarse en ...\Proyecto><br>
       -crear entorno virtual (para instalar python pip install virtualenv) -> ...\Proyecto> virtualenv venv<br>
