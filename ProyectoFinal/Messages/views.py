@@ -8,6 +8,7 @@ from .forms import MessageForm
 from django.views.generic.edit import FormMixin
 from django.views.generic import View
 
+
 # Create your views here.
 class Inbox(View):
 	def get(self, request):
@@ -54,7 +55,7 @@ class ChatFormMixin(FormMixin):
 			return super().form_invalid(form)
 
 class ChatDetailView(LoginRequiredMixin, ChatFormMixin, DetailView):
-	template_name= 'chat_detail.html'
+	template_name= 'chat-detail.html'
 	queryset = Chat.objects.all()
 
 	def get_context_data(self, *args, **kwargs):
@@ -72,7 +73,7 @@ class ChatDetailView(LoginRequiredMixin, ChatFormMixin, DetailView):
 
 class DetailMs(LoginRequiredMixin, ChatFormMixin, DetailView):
 
-	template_name= 'chat_detail.html'
+	template_name= 'chat-detail.html'
 
 	def get_object(self, *args, **kwargs):
 

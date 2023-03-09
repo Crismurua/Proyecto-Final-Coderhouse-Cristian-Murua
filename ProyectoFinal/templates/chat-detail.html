@@ -1,0 +1,169 @@
+{% extends 'main.html' %}
+
+{% block title %}
+Messages
+{% endblock %}
+
+{% block header %}
+Chat
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+#contenedor_ms{
+			width: 80%;
+			height: calc(80vh);
+			margin-top: 100px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+			overflow-y: auto;
+			border: 1px solid black;
+			background: lightgrey;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+		}
+
+.div_ms{
+	margin: 1.2rem auto;
+	width: 35%;
+	padding: 0.2rem 0.6rem 0.2rem 0.6rem;
+    
+}
+
+.my_messages{
+			margin-right: 5px;
+			background-color:rgb(100, 100, 100);
+			color: #fff;
+			border-bottom-left-radius: 16px;
+			border-top-left-radius: 16px;
+			border-top-right-radius: 16px;
+		}
+
+.your_messages{
+	background: rgb(230, 236, 240);
+	margin-left: 5px;
+	border-bottom-right-radius: 16px;
+	border-top-left-radius: 16px;
+	border-top-right-radius: 16px;
+}
+ 
+.div_form_ms{
+			
+			margin-top: 5px;
+			margin-bottom: 5px;
+			margin-left: auto;
+            margin-right: auto;
+			
+		}
+
+#form_submit{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-height: 50px;
+    
+}
+textarea {
+    max-height: 50px;
+    
+}
+header{
+    display: none;
+}
+
+
+</style>
+
+<section>
+    <div class="container py-4"></div>   
+
+        <div id="contenedor_ms">
+            {% for message in object.chatmessage_set.all %}	
+                <div class="div_ms {% if request.user == message.user %}my_messages
+                {% else %} your_messages{% endif %}">
+                    <small>{{message.user}}</small>
+                    <p>{{message.text}}</p>
+                    <small>{{message.date}}</small>
+                </div>
+        
+            {% endfor %}
+        </div>
+
+        <div class="div_form_ms">
+            <form id="form_submit" action="{{ request.path }}" method="POST">
+                {% csrf_token %}
+                <table>
+                    {{form.as_table}}
+                </table>
+                <button type="submit" class="btn btn-outline-dark">
+                    Send
+                </button>
+    
+    
+            </form>
+    
+        </div>
+
+
+</section>
+
+<script>
+
+	const MsgForm = document.getElementById("form_submit")
+	const msgContainer = document.getElementById("contenedor_ms")
+
+
+	MsgForm.addEventListener("submit", (event) => {
+
+		event.preventDefault()
+
+		const  targetDate = event.target 
+		const formData = new FormData(targetDate)
+
+		const xhr = new XMLHttpRequest() // ajax fetch
+
+
+		const endpoint = MsgForm.getAttribute("action")
+		const method = MsgForm.getAttribute("method")
+		xhr.open(method, endpoint)
+
+		xhr.responseType = 'json'
+
+		xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+		xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+
+		xhr.onload = () =>{
+
+			console.log(xhr.status, xhr.response)
+
+			if(xhr.status === 201){
+				const respuestaData = xhr.response
+				let actualMensajeHtml = msgContainer.innerHTML
+				actualMensajeHtml += `<div class=''><b>${respuestaData.username}</b><p>${respuestaData.message}</p></div>` 
+				msgContainer.innerHTML = actualMensajeHtml
+				MsgForm.reset()
+			}else if(xhr.status === 400){
+				console.log(hxr.response)
+			}else{
+				alert("Something happend")
+			}
+
+		}
+
+		xhr.send(formData)
+
+
+	})
+	
+
+
+</script>
+
+{% endblock %}

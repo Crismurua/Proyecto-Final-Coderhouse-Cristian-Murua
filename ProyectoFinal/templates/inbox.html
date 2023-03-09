@@ -1,0 +1,70 @@
+{% extends 'main.html' %}
+
+{% block title %}
+Messages
+{% endblock %}
+
+{% block header %}
+Inbox
+{% endblock %}
+
+{% block subheader %}
+Welcome {{ user.username }}
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-2">
+        
+        {% for inbox in inbox %}
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for second_user in inbox.chatuser_set.all %}
+
+                {% if second_user.user == request.user %}
+                {% else %}
+                    <a class="btn btn-outline-dark" href="{% url 'messages:detailms' second_user.user.username %}">
+                        <p>
+                            {{second_user.user}}
+                        </p>
+                        <small>
+                            ({{inbox.chatmessage_set.count}}) Messages
+                        </small>
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+                    {% if inbox.chatmessage_set.count != 0 %}
+                    <div class="div_ms_inbox">
+                        
+                        {% with last_message=inbox.chatmessage_set.last %}
+            
+                            <p>
+                                Message: {{ last_message.text }}
+                            </p>
+            
+                            <p>
+                                User: {{ last_message.user }}
+                            </p>
+            
+                        {% endwith %}
+                    </div>	
+                {% else %}
+                    <p>
+                        Not Messages
+                    </p>
+                {% endif %}
+            
+            
+            
+            </div>
+            {% empty %}
+            
+            <h2>
+                Empty Inbox
+            </h2>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

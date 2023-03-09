@@ -20,6 +20,7 @@ See the complete info about the product
             <div class="col-md-6">
                 <div class="medium mb-2">Seller: {{ product.user.username }} 
                     <a class="btn btn-outline-dark" href="{% url 'accounts:user-detail' product.user.id %}">+ Info</a>
+                    <a class="btn btn-outline-dark" href="{% url 'messages:detailms' product.user.username %}">Contact</a>
                 </div>
                 <div class="small mb-1">ID: {{ product.id }}</div>
                 <h1 class="display-5 fw-bolder">{{ product.name }}</h1>

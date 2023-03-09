@@ -9,5 +9,5 @@ urlpatterns = [
     re_path(UUID_CHAT_REGEX, ChatDetailView.as_view()),
 	path("dm/<str:username>", private_messages, name='privatems'),
 	path("ms/<str:username>", DetailMs.as_view(), name="detailms"),
-	path("", Inbox.as_view(), name="inbox"),
+	path("inbox/", Inbox.as_view(), name="inbox"),
 ]
