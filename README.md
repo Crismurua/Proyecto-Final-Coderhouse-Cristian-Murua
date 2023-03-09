@@ -2,6 +2,9 @@
 
 Integrantes:<br>
   Cristian Murua<br>
+  
+Link de Video:<br>
+https://clipchamp.com/watch/1nZGOSbwJ0n <br>
 
 <strong>Descripcion del Proyecto:</strong><br>
   Marketplace interactivo para usuarios registrados.<br>
