@@ -14,13 +14,13 @@ Chat
 <style>
 
 #contenedor_ms{
-			width: 80%;
-			height: calc(80vh);
+			width: 50%;
+			height: calc(100vh);
 			margin-top: 100px;
-            padding: 20px;
+            padding: 50px;
             margin-left: auto;
             margin-right: auto;
-			overflow-y: auto;
+			overflow-y: scroll;
 			border: 1px solid black;
 			background: lightgrey;
             display: flex;
@@ -29,13 +29,14 @@ Chat
 		}
 
 .div_ms{
-	margin: 1.2rem auto;
 	width: 35%;
-	padding: 0.2rem 0.6rem 0.2rem 0.6rem;
+	margin: 2px auto;
+	padding: 0.2rem 0.6rem 0.2rem 0.6rem; 
     
 }
 
 .my_messages{
+			
 			margin-right: 5px;
 			background-color:rgb(100, 100, 100);
 			color: #fff;
@@ -75,14 +76,15 @@ textarea {
     
 }
 header{
-    display: none;
+	display:none;
 }
+
 
 
 </style>
 
-<section>
-    <div class="container py-4"></div>   
+
+    <div class="container py-1"></div>   
 
         <div id="contenedor_ms">
             {% for message in object.chatmessage_set.all %}	
@@ -112,7 +114,7 @@ header{
         </div>
 
 
-</section>
+
 
 <script>
 
