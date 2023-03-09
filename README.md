@@ -56,8 +56,7 @@ Integrantes:<br>
       Proyecto/ProyectoFinal/Project/test.py<br>
       <hr>
       
-  <h3>Como correr el proyecto:</h3><br>
-      
+  <h3>Como correr el proyecto:</h3><br>      
       -clonar repositorio en su ordenador<br>
       -desde una consola (ej. cmd, powershell o bash para windows) ubicarse en ...\Proyecto><br>
       -crear entorno virtual (para instalar python pip install virtualenv) -> ...\Proyecto> virtualenv venv<br>
