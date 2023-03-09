@@ -13,22 +13,25 @@ See the complete info about the seller
 {% endblock %}
 
 {% block content %}
+
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ user.avatar.image.url }}" alt="{{ user.username }}" /></div>
-            <div class="col-md-6">
+            {% with seller=user %}
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ seller.avatar.image.url }}" alt="{{ seller.username }}" /></div>
+                <div class="col-md-6">
+                    <div class="small mb-1">ID: {{ seller.id }}</div>
+                    <h1 class="display-5 fw-bolder">{{ seller.username }}</h1>
+                    <div class="fs-1 mb-5">
+                        <strong><span>{{ seller.first_name }} {{ seller.last_name }}</span></strong>
 
-                <div class="small mb-1">ID: {{ user.id }}</div>
-                <h1 class="display-5 fw-bolder">{{ user.username }}</h1>
-                <div class="fs-1 mb-5">
-                    <strong><span>{{ user.first_name }} {{ user.last_name }}</span></strong>
-                    
-                </div>
-                <p class="lead">{{ user.userextra.phone }}</p>
-                <p class="lead">{{ user.email }}</p>
-                <div class="d-flex">
-                    <div class="small m-2">{{ user.userextra.location }}</div>
+                    </div>
+                    <p class="lead">{{ seller.userextra.phone }}</p>
+                    <p class="lead">{{ seller.email }}</p>
+                    <div class="d-flex">
+                        <div class="small m-2">{{ seller.userextra.location }}</div>
+                    </div>
+                {% endwith %}
                 </div>
             </div>
         </div>
